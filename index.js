@@ -53,6 +53,17 @@ async function run() {
 
     })
 
+app.post( '/addCraftItem' , async(req ,res )=>{
+
+  const   newCrftItem= req.body
+  console.log(newCrftItem)
+
+  const result = await  artsCollection.insertOne( newCrftItem)
+  res.send( result)
+
+})
+
+
     app.get('/', (req, res) => {
 
       console.log(res.send("a-10 server "))
