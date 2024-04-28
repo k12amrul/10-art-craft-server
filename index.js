@@ -52,6 +52,14 @@ async function run() {
 
 
     })
+    app.get('/arts/:id', async (req, res) => {
+      const id = req.params.id 
+       const  query = { _id : new ObjectId(id)} // artsCollection.findOne()
+      const result =    await  artsCollection.findOne(query) //.toArray()
+      res.send(result)
+
+
+    })  
 
 app.post( '/addCraftItem' , async(req ,res )=>{
 
