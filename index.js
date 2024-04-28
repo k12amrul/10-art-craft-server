@@ -46,30 +46,61 @@ async function run() {
     // )
 
     app.get('/arts', async (req, res) => {
-      const query =  artsCollection.find()
+      const query = artsCollection.find()
       const result = await query.toArray()
       res.send(result)
 
 
     })
-    app.get('/arts/:id', async (req, res) => {
-      const id = req.params.id 
-       const  query = { _id : new ObjectId(id)} // artsCollection.findOne()
-      const result =    await  artsCollection.findOne(query) //.toArray()
+
+    // app.get('/arts/:id', async (req, res) => {
+    //   const id = req.params.id
+    //   const query = { _id: new ObjectId(id) } // artsCollection.findOne()
+    //   const result = await artsCollection.findOne(query) //.toArray()
+    //   res.send(result)
+
+
+    // })
+
+    app.get('/myArtCraft/:email', async (req, res) => {
+    
+
+      const email = req.params.email;
+      // console.log(email)
+      const query = { userEmail: email };
+      const result = await artsCollection.find(query).toArray()
+
       res.send(result)
 
 
-    })  
+    })
 
-app.post( '/addCraftItem' , async(req ,res )=>{
 
-  const   newCrftItem= req.body
-  console.log(newCrftItem)
 
-  const result = await  artsCollection.insertOne( newCrftItem)
-  res.send( result)
+  //   app.get('/myArtCraft', async (req, res) => {
+  //     // console.log(req.query )
+  //     let query = {}
+  //     if (req.query.email) {
+  //         query = {
+  //             email: req.query.email
+  //         }
 
-})
+  //     }
+  //     const cursor = artsCollection.find(query)
+  //     const result = await cursor.toArray()
+  //     res.send(result)
+  // })
+
+
+    app.post('/addCraftItem', async (req, res) => {
+
+      const newCrftItem = req.body
+      console.log(newCrftItem)
+
+      const result = await artsCollection.insertOne(newCrftItem)
+      res.send(result)
+
+    })
 
 
     app.get('/', (req, res) => {
