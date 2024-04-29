@@ -45,8 +45,15 @@ async function run() {
     // }
     // )
 
+    app.get('/', async (req, res) => {
+      const query = artsCollection.find().limit(6)
+      const result = await query.toArray()
+      res.send(result)
+
+
+    })
     app.get('/arts', async (req, res) => {
-      const query = artsCollection.find()
+      const query = artsCollection.find()//.limit(6)
       const result = await query.toArray()
       res.send(result)
 
@@ -67,7 +74,7 @@ async function run() {
 
       const email = req.params.email;
       // console.log(email)
-      const query = { userEmail: email };
+      const query = { user_email: email };
       const result = await artsCollection.find(query).toArray()
 
       res.send(result)
