@@ -59,14 +59,14 @@ async function run() {
 
     })
 
-    // app.get('/arts/:id', async (req, res) => {
-    //   const id = req.params.id
-    //   const query = { _id: new ObjectId(id) } // artsCollection.findOne()
-    //   const result = await artsCollection.findOne(query) //.toArray()
-    //   res.send(result)
+    app.get('/arts/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: new ObjectId(id) } // artsCollection.findOne()
+      const result = await artsCollection.findOne(query) //.toArray()
+      res.send(result)
 
 
-    // })
+    })
 
     app.get('/myArtCraft/:email', async (req, res) => {
 
@@ -126,11 +126,11 @@ async function run() {
     })
 
 
-    app.delete("/arts/:id", (req, res) => {
+    app.delete("/arts/:id", async(req, res) => {
       const id = req.params.id
       const query = { _id: new ObjectId(id) }
 
-      const result = artsCollection.deleteOne(query)
+      const result =await  artsCollection.deleteOne(query)
       res.send(result)
 
 
