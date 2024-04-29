@@ -57,7 +57,6 @@ async function run() {
       const result = await query.toArray()
       res.send(result)
 
-
     })
 
     // app.get('/arts/:id', async (req, res) => {
@@ -70,7 +69,7 @@ async function run() {
     // })
 
     app.get('/myArtCraft/:email', async (req, res) => {
-    
+
 
       const email = req.params.email;
       // console.log(email)
@@ -84,19 +83,19 @@ async function run() {
 
 
 
-  //   app.get('/myArtCraft', async (req, res) => {
-  //     // console.log(req.query )
-  //     let query = {}
-  //     if (req.query.email) {
-  //         query = {
-  //             email: req.query.email
-  //         }
+    //   app.get('/myArtCraft', async (req, res) => {
+    //     // console.log(req.query )
+    //     let query = {}
+    //     if (req.query.email) {
+    //         query = {
+    //             email: req.query.email
+    //         }
 
-  //     }
-  //     const cursor = artsCollection.find(query)
-  //     const result = await cursor.toArray()
-  //     res.send(result)
-  // })
+    //     }
+    //     const cursor = artsCollection.find(query)
+    //     const result = await cursor.toArray()
+    //     res.send(result)
+    // })
 
 
     app.post('/addCraftItem', async (req, res) => {
@@ -106,6 +105,34 @@ async function run() {
 
       const result = await artsCollection.insertOne(newCrftItem)
       res.send(result)
+
+    })
+
+    app.put('/art/:id', async (req, res) => {
+      const id = req.params.id
+      const filter = { _id: new ObjectId(id) }
+      const updatedArt = req.body
+      const options = { upsert: true }
+      const art = {
+        $set: {
+          // name: updatedProduct.name,
+          
+        }
+      }
+      const result = await artsCollection.updateOne(filter, art, options)
+      res.send(result)
+
+
+    })
+
+
+    app.delete("/arts/:id", (req, res) => {
+      const id = req.params.id
+      const query = { _id: new ObjectId(id) }
+
+      const result = artsCollection.deleteOne(query)
+      res.send(result)
+
 
     })
 
