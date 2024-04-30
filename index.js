@@ -7,8 +7,8 @@ const cors = require('cors')
 const port = process.env.PORT || 5000
 
 
-app.use(cors({ origin: ["http://localhost:5173", "https://eloquent-dango-c20301.netlify.app/"] }))
-// app.use(cors())
+// app.use(cors({ origin: ["http://localhost:5173", "https://eloquent-dango-c20301.netlify.app"] }))
+app.use(cors())
 app.use(express.json())
 // console.log(process.env.DB_USER)
 // console.log(process.env.DB_PAS)
@@ -33,7 +33,7 @@ async function run() {
     // await client.connect();
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     const database = client.db("artDB");
