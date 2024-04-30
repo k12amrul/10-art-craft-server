@@ -6,10 +6,12 @@ const app = express()
 const cors = require('cors')
 const port = process.env.PORT || 5000
 
-app.use(cors())
+
+app.use(cors({ origin: ["http://localhost:5173", "https://eloquent-dango-c20301.netlify.app/"] }))
+// app.use(cors())
 app.use(express.json())
-console.log(process.env.DB_USER)
-console.log(process.env.DB_PAS)
+// console.log(process.env.DB_USER)
+// console.log(process.env.DB_PAS)
 
 // 
 
@@ -46,6 +48,8 @@ async function run() {
     // }
     // )
 
+
+
     app.get('/', async (req, res) => {
       const query = categoryCollection.find().limit(6)
       const result = await query.toArray()
@@ -81,6 +85,8 @@ async function run() {
 
 
     })
+
+
 
 
 
@@ -121,18 +127,18 @@ async function run() {
           subcategory_Name: updatedItem.subcategory_Name,
           item_name: updatedItem.item_name,
           customization: updatedItem.customization,
-           description: updatedItem.description,
+          description: updatedItem.description,
           imageURL: updatedItem.imageURL,
           price: updatedItem.price,
           rating: updatedItem.rating,
-         processing_time : updatedItem.processing_time,
+          processing_time: updatedItem.processing_time,
           stockStatus: updatedItem.stockStatus,
           discount: updatedItem.discount,
-         user_email : updatedItem.user_email,
-         user_name : updatedItem.user_name,
-          
-        
-       
+          user_email: updatedItem.user_email,
+          user_name: updatedItem.user_name,
+
+
+
         }
       }
       const result = await artsCollection.updateOne(filter, artItem, options)
@@ -142,18 +148,20 @@ async function run() {
     })
 
 
-    app.delete("/arts/:id", async(req, res) => {
+    app.delete("/arts/:id", async (req, res) => {
       const id = req.params.id
       const query = { _id: new ObjectId(id) }
 
-      const result =await  artsCollection.deleteOne(query)
+      const result = await artsCollection.deleteOne(query)
       res.send(result)
 
 
     })
 
 
-    
+    app.get('/test', (req, res) => {
+      res.send('a-10 server testing successfully ')
+    })
 
     // app.get('/', (req, res) => {
 
@@ -165,7 +173,7 @@ async function run() {
 
 
   } finally {
-    
+
   }
 }
 run().catch(console.dir);
