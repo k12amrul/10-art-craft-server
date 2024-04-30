@@ -36,6 +36,7 @@ async function run() {
 
     const database = client.db("artDB");
     const artsCollection = database.collection("arts");
+    const categoryCollection = database.collection("categoriese");
 
     // app.get('/users', async (req, res) => {
     //   const cursor = artCollection.find()
@@ -46,7 +47,7 @@ async function run() {
     // )
 
     app.get('/', async (req, res) => {
-      const query = artsCollection.find().limit(6)
+      const query = categoryCollection.find().limit(6)
       const result = await query.toArray()
       res.send(result)
 
@@ -111,15 +112,30 @@ async function run() {
     app.put('/art/:id', async (req, res) => {
       const id = req.params.id
       const filter = { _id: new ObjectId(id) }
-      const updatedArt = req.body
+      const updatedItem = req.body
       const options = { upsert: true }
-      const art = {
+      const artItem = {
         $set: {
-          // name: updatedProduct.name,
+          // name: updatedItem.name,
+          // name: updatedItem.name,
+          subcategory_Name: updatedItem.subcategory_Name,
+          item_name: updatedItem.item_name,
+          customization: updatedItem.customization,
+           description: updatedItem.description,
+          imageURL: updatedItem.imageURL,
+          price: updatedItem.price,
+          rating: updatedItem.rating,
+         processing_time : updatedItem.processing_time,
+          stockStatus: updatedItem.stockStatus,
+          discount: updatedItem.discount,
+         user_email : updatedItem.user_email,
+         user_name : updatedItem.user_name,
           
+        
+       
         }
       }
-      const result = await artsCollection.updateOne(filter, art, options)
+      const result = await artsCollection.updateOne(filter, artItem, options)
       res.send(result)
 
 
@@ -137,11 +153,13 @@ async function run() {
     })
 
 
-    app.get('/', (req, res) => {
+    
 
-      console.log(res.send("a-10 server "))
-      res.send(" a-10 server  ")
-    })
+    // app.get('/', (req, res) => {
+
+    //   console.log(res.send("a-10 server "))
+    //   res.send(" a-10 server  ")
+    // })
 
 
 
